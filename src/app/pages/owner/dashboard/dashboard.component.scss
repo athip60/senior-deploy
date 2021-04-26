@@ -1,0 +1,29 @@
+* {
+  font-family: maledpan;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+.content {
+  padding: 2% 6% 2% 6%;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+
+.mat-card {
+  border-radius: 10px;
+}
+
+.card-total {
+  cursor: pointer;
+  max-height: 100vw;
+  min-height: 5vw;
+}
+
+.card-total:hover {
+  background-color: whitesmoke;
+}

@@ -1,0 +1,76 @@
+* {
+  font-family: maledpan;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+.content {
+  padding: 1% 6% 0% 6%;
+}
+
+.content > mat-card {
+  width: 200px;
+  border-radius: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+  .mat-icon {
+    transform: scale(3);
+    margin-top: 25px;
+    color: #a6a6a6;
+  }
+  p {
+    margin-top: 25px;
+    font-size: 18px;
+    font-weight: 550;
+    color: #a6a6a6;
+  }
+}
+.card-total {
+  cursor: pointer;
+  max-height: 100vw;
+  min-height: 5vw;
+}
+.card-total-cannot {
+  cursor: pointer;
+  max-height: 100vw;
+  min-height: 5vw;
+  background-color: #ff6262;
+}
+.card-total-success {
+  cursor: pointer;
+  max-height: 100vw;
+  min-height: 5vw;
+  background-color: #2bc98f;
+}
+
+.card-total:hover {
+  background-color: whitesmoke;
+}
+
+.card-total-cannot:hover {
+  background-color: #d65e5e;
+}
+
+.card-total-success:hover {
+  background-color: #2dad7e
+}
+
+button.mat-focus-indicator{
+  margin-top: 15px;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #424b54 !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  background-color: #424b54 !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ background-color: #424b54 !important;;
+}

@@ -1,0 +1,167 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>เพิ่มรายรับ - รายจ่าย</h1>
+</div>
+<div mat-dialog-content>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">วัน/เดือน/ปี</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          required
+          name="date_program"
+          [(ngModel)]="form.date_program"
+          #date_program="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-hint>
+          <div *ngIf="f.submitted && date_program.invalid">
+            <div *ngIf="date_program.errors.required" class="hint-message">
+              กรุณาเพิ่มวันที่ทำรายการ
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <!-- ข้อมูลรายการ -->
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">ข้อมูลรายการ</mat-label>
+        <input
+          matInput
+          type="text"
+          required
+          name="program"
+          [(ngModel)]="form.program"
+          #program="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && program.invalid">
+            <div *ngIf="program.errors.required" class="hint-message">
+              กรุณาข้อมูลรายการ
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <!-- รายรับ-รายจ่าย -->
+    <p
+      fxLayout="row"
+      fxLayout.md="column"
+      fxLayout.sm="column"
+      fxLayout.xs="column"
+      fxLayoutGap="7px"
+    >
+      <!-- รายรับ -->
+      <mat-form-field
+        fxFlex="49%"
+        appearance="fill"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">รายรับ</mat-label>
+        <input
+          matInput
+          type="number"
+          placeholder="รายรับ"
+          required
+          style="font-size: 1rem"
+          name="credit"
+          [(ngModel)]="form.credit"
+          #credit="ngModel"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && credit.invalid">
+            <div *ngIf="credit.errors.required" class="hint-message">
+              กรุณากรอกรายรับ
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+      <!-- รายจ่าย -->
+      <mat-form-field
+        fxFlex="49%"
+        appearance="fill"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">รายจ่าย</mat-label>
+        <input
+          matInput
+          placeholder="รายจ่าย"
+          type="number"
+          required
+          style="font-size: 1rem"
+          name="debit"
+          [(ngModel)]="form.debit"
+          #debit="ngModel"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && debit.invalid">
+            <div *ngIf="debit.errors.required" class="hint-message">
+              กรุณากรอกรายจ่าย
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <!-- หมายเหตุ -->
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">หมายเหตุ</mat-label>
+        <input
+          matInput
+          type="text"
+          name="note"
+          [(ngModel)]="form.note"
+          style="font-size: 1rem"
+        />
+      </mat-form-field>
+    </p>
+    <p style="text-align: center">
+      <button
+        style="
+          width: 200px;
+          margin-top: 1%;
+          background-color: #424b54;
+          color: #ebcfb8;
+        "
+        mat-raised-button
+        type="submit"
+      >
+        เพิ่มข้อมูล
+      </button>
+    </p>
+  </form>
+</div>

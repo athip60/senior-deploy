@@ -1,0 +1,94 @@
+<div style="margin-bottom: 30px">
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>คอมเม้นต์</h1>
+  <h2 mat-dialog-description></h2>
+</div>
+<div mat-dialog-content>
+  <ng-container *ngFor="let comment of comment_data">
+    <div style="margin-bottom: 30px;">
+      <ng-container *ngIf="data.userLogin === comment.user_comment; else notEqual">
+        <span style="float: right">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="updateComment(comment)">
+              <mat-icon>create</mat-icon>
+              <span>แก้ไขคอมเม้นต์</span>
+            </button>
+            <button mat-menu-item (click)="delete(comment.id)">
+              <mat-icon>delete</mat-icon>
+              <span>ลบคอมเม้นต์</span>
+            </button>
+          </mat-menu>
+        </span>
+      </ng-container>
+      <ng-template #notEqual>
+        <span style="float: right">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            
+          </mat-menu>
+        </span>
+      </ng-template>
+      <div style="margin-bottom: 10px">
+        <div style="font-size: 1.1rem">{{ comment.username }}</div>
+        <div style="font-size: 0.9rem; color: #6b6b6b">
+          วันที่ {{ comment.createdAt | date: "d/M/y, เวลา H:mm":"th-TH" }}
+        </div>
+      </div>
+      <p style="font-size: 1.05rem; margin-left: 20px">{{ comment.content }}</p>
+    </div>
+  </ng-container>
+
+  <div style="margin-top: 30px">
+    <form
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <mat-form-field
+        appearance="fill"
+        [hideRequiredMarker]="true"
+        style="width: 100%"
+      >
+        <mat-label>คอมเม้นต์</mat-label>
+        <input
+          matInput
+          type="text"
+          name="content"
+          required
+          [(ngModel)]="form.content"
+          #content="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && content.invalid">
+            <div *ngIf="content.errors.required" class="hint-message">
+              กรุณากรอกข้อความ
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+      <p style="text-align: center">
+        <button
+          style="width: 200px; background-color: #424b54; color: #ebcfb8"
+          mat-raised-button
+          type="submit"
+        >
+          บันทึกข้อมูล
+        </button>
+      </p>
+    </form>
+  </div>
+</div>

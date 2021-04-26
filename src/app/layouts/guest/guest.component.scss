@@ -1,0 +1,152 @@
+* {
+  font-family: maledpan;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+.gap {
+  flex: 1 1 auto;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+mat-sidenav {
+  width: 290px;
+}
+
+.sidenav-logo-fix {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  align-items: center;
+  font-size: 30px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  padding-left: 80px;
+  color: #66615b;
+}
+
+.mat-expansion-panel-header {
+  font-size: 16px;
+  .mat-expansion-panel-header-title {
+    color: #66615b;
+  }
+  .mat-expansion-panel-header-title:hover {
+    color: #ce8054;
+  }
+}
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+  color: #66615b;
+}
+
+.mat-expansion-panel-header:hover {
+  font-size: 16px;
+  background: white !important;
+}
+
+.mat-list-item:hover {
+  background: white;
+}
+
+.sidenav-list-item-fix {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  color: #66615b;
+}
+.sidenav-list-item-fix:hover {
+  color: #ce8054;
+  .sidenav-list-item-text {
+    color: #ce8054;
+  }
+}
+
+.sidenav-list-item-text {
+  color: #66615b;
+  padding-top: 3px;
+  padding-left: 18px;
+  font-size: 16px;
+}
+
+.mat-drawer-side {
+  border-right: solid 0px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 3px 5px -1px rgb(0 0 0 / 20%),
+    0px 5px 8px 0px rgb(0 0 0 / 14%), 0px 1px 14px 0px rgb(0 0 0 / 12%);
+}
+
+.sidenav-list-item-icon {
+  text-align: right;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.mat-toolbar {
+  background: #424b54;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.notification-wrapper {
+  position: relative;
+  padding: 8px 15px;
+  float: right;
+  border-radius: 5px;
+}
+
+.notification-wrapper .notification-btn {
+  color: #ffffff;
+  cursor: pointer;
+}
+
+// .notification-wrapper .notification-btn:hover {
+//   color: royalblue;
+//   padding: 1px;
+//   background-color: #ffffff;
+//   border-radius: 500px;
+// }
+
+.notification-wrapper .notification-content {
+  position: absolute;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #424b54;
+  top: 40px;
+  right: 5px;
+  width: 350px;
+  background-color: whitesmoke;
+  z-index: 300;
+}
+
+.notification-wrapper .notification-header {
+  padding: 10px;
+  background-color: #66615b;
+  color: #ebcfb8;
+}
+
+.notification-wrapper .notification-header .label {
+  display: inline-block;
+  width: 90%;
+  text-align: center;
+  font-weight: 500;
+}

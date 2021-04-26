@@ -1,0 +1,223 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>{{ this.data.header }}</h1>
+</div>
+<div mat-dialog-content>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">หมายเลขห้อง</mat-label>
+        <mat-select
+          (selectionChange)="selectedRoomNumber($event.value)"
+          name="data_room_id_check"
+          [(ngModel)]="form.data_room_id_check"
+          required
+          #data_room_id_check="ngModel"
+          style="font-size: 1rem"
+        >
+          <ng-container *ngFor="let data of form_room_number">
+            <mat-option value="{{ data.data_room_id }}">{{
+              data.room_number
+            }}</mat-option>
+          </ng-container>
+        </mat-select>
+        <mat-hint>
+          <div *ngIf="f.submitted && data_room_id_check.invalid">
+            <div
+              *ngIf="data_room_id_check.errors.required"
+              class="hint-message"
+            >
+              กรุณาเลือกหมายเลขห้อง
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">ค่าเช่าหอ</mat-label>
+        <input
+          matInput
+          type="number"
+          name="room_cost"
+          required
+          [(ngModel)]="form.room_cost"
+          #room_cost="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && room_cost.invalid">
+            <div *ngIf="room_cost.errors.required" class="hint-message">
+              กรุณากรอกค่าเช่าหอ
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">ค่าเฟอร์นิเจอร์</mat-label>
+        <input
+          matInput
+          type="number"
+          required
+          name="furniture_cost"
+          [(ngModel)]="form.furniture_cost"
+          #furniture_cost="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && furniture_cost.invalid">
+            <div *ngIf="furniture_cost.errors.required" class="hint-message">
+              กรุณากรอกค่าเฟอร์นิเจอร์
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">ค่าอินเตอร์เน็ต</mat-label>
+        <input
+          matInput
+          type="number"
+          required
+          name="internet_cost"
+          [(ngModel)]="form.internet_cost"
+          #internet_cost="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && internet_cost.invalid">
+            <div *ngIf="internet_cost.errors.required" class="hint-message">
+              กรุณากรอกค่าอินเตอร์เน็ต
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">ค่าน้ำ</mat-label>
+        <input
+          matInput
+          type="number"
+          required
+          name="water_cost"
+          [(ngModel)]="form.water_cost"
+          #water_cost="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && water_cost.invalid">
+            <div *ngIf="water_cost.errors.required" class="hint-message">
+              กรุณากรอกค่าน้ำ
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem"
+          >จำนวนหน่วยไฟฟ้าที่ใช้ในเดือนนี้</mat-label
+        >
+        <input
+          matInput
+          type="number"
+          required
+          name="unit_in_month"
+          [(ngModel)]="form.unit_in_month"
+          #unit_in_month="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && unit_in_month.invalid">
+            <div *ngIf="unit_in_month.errors.required" class="hint-message">
+              กรุณากรอกจำนวนหน่วยไฟฟ้าที่ใช้ในเดือนนี้
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label style="font-size: 0.95rem">ค่าไฟฟ้า ราคา/หน่วย</mat-label>
+        <input
+          matInput
+          type="number"
+          required
+          name="unit_per_month"
+          [(ngModel)]="form.unit_per_month"
+          #unit_per_month="ngModel"
+          style="font-size: 1rem"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && unit_per_month.invalid">
+            <div *ngIf="unit_per_month.errors.required" class="hint-message">
+              กรุณากรอกค่าไฟฟ้า ราคา/หน่วย
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p style="text-align: center">
+        <button
+          style="
+            width: 200px;
+            margin-top: 1%;
+            background-color: #424b54;
+            color: #ebcfb8;
+          "
+          mat-raised-button
+          type="submit"
+        >
+          {{ this.data.button }}
+        </button>
+    </p>
+  </form>
+</div>

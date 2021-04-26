@@ -1,0 +1,284 @@
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="20px grid" style="padding-bottom: 8px">
+    <!-- สัญญาทั้งหมด -->
+    <div fxFlex="33.3%" fxFlex.xs="100%" fxFlex.sm="33.3%">
+      <mat-card
+        class="mat-elevation-z5 card-total"
+        style="background-color: #1acccd"
+      >
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+              margin-left: 14px;
+              margin-right: 14px;
+            "
+          >
+            <mat-icon
+              style="color: white; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >description</mat-icon
+            >
+            <div>
+              <p style="color: white; font-size: 1.2rem; text-align: right">
+                สัญญาทั้งหมด
+              </p>
+              <p
+                style="
+                  color: white;
+                  font-size: 1.6rem;
+                  text-align: right;
+                  font-weight: bold;
+                "
+              >
+                {{ lease_data.length }}
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- รายจ่าย -->
+    <div fxFlex="33.3%" fxFlex.xs="100%" fxFlex.sm="33.3%">
+      <mat-card
+        class="mat-elevation-z5 card-total"
+        style="background-color: #2bc98f"
+      >
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+              margin-left: 14px;
+              margin-right: 14px;
+            "
+          >
+            <mat-icon
+              style="color: white; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >playlist_add_check</mat-icon
+            >
+            <div>
+              <p style="color: white; font-size: 1.2rem; text-align: right">
+                สัญญาที่ดำเนินการเรียบร้อย
+              </p>
+              <p
+                style="
+                  color: white;
+                  font-size: 1.6rem;
+                  text-align: right;
+                  font-weight: bold;
+                "
+              >
+                {{ successful }}
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- จำนวนห้องทั้งหมด -->
+    <div fxFlex="33.3%" fxFlex.xs="100%" fxFlex.sm="33.3%">
+      <mat-card
+        class="mat-elevation-z5 card-total"
+        style="background-color: #f3b435"
+      >
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+              margin-left: 14px;
+              margin-right: 14px;
+            "
+          >
+            <mat-icon
+              style="color: white; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >hourglass_full</mat-icon
+            >
+            <div>
+              <p style="color: white; font-size: 1.2rem; text-align: right">
+                สัญญาที่ยังไม่ดำเนินการ
+              </p>
+              <p
+                style="
+                  color: white;
+                  font-size: 1.6rem;
+                  text-align: right;
+                  font-weight: bold;
+                "
+              >
+                {{ unsuccessful }}
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div flLayout="column" fxLayoutGap.xs="0px">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label style="font-size: 1rem"
+        >กรอกข้อมูลสัญญาเช่าเพื่อค้นหา</mat-label
+      >
+      <input
+        style="font-size: 1rem"
+        matInput
+        (keyup)="applyFilter($event)"
+        #input
+      />
+    </mat-form-field>
+  </div>
+  <div class="mat-elevation-z5">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- เลขห้อง -->
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ห้อง</th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.room_number }}
+          </div>
+        </td>
+      </ng-container>
+      <!-- สถานะการทำสัญญา -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          สถานะการทำสัญญา
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.lease_status }}
+          </div>
+        </td>
+      </ng-container>
+      <!-- วันที่สร้างสัญญา  -->
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          วันที่สมัครสมาชิก
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.dateCreateTranform }}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          วันที่แก้ไขครั้งล่าสุด
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.dateUpdateTranform }}
+          </div>
+        </td>
+      </ng-container>
+      <!-- Pdf function -->
+      <ng-container matColumnDef="pdf">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>PDF Functions</th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            <button
+              class="pdf-button"
+              mat-icon-button
+              matTooltip="เปิดสัญญาเช่า"
+              style="color: #66615b"
+              (click)="makePdfLease(data, 'open')"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              class="pdf-button"
+              mat-icon-button
+              matTooltip="ดาวน์โหลดสัญญาเช่า"
+              style="color: #66615b"
+              (click)="makePdfLease(data, 'download')"
+            >
+              <mat-icon>get_app</mat-icon>
+            </button>
+            <button
+              class="pdf-button"
+              mat-icon-button
+              matTooltip="พิมพ์สัญญาเช่า"
+              style="color: #66615b"
+              (click)="makePdfLease(data, 'print')"
+            >
+              <mat-icon>print</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <!-- button -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Functions</th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            <ng-container *ngIf="data.photo_1 && data.photo_2; else is_null">
+              <button
+                mat-flat-button
+                color="primary"
+                style="
+                  margin-right: 16px;
+                  width: 160px;
+                  background-color: #ffbc35;
+                  color: white;
+                  font-size: 0.9rem;
+                "
+                (click)="addUpdatePhoto(data)"
+              >
+                แก้ไขรูปภาพสัญญาเช่า
+              </button>
+              <button
+                mat-flat-button
+                color="primary"
+                style="
+                  margin-right: 16px;
+                  width: 160px;
+                  background-color: #30dd7e;
+                  color: white;
+                  font-size: 0.9rem;
+                "
+                (click)="viewImg(data)"
+              >
+                ดูรูปภาพสัญญาเช่า
+              </button>
+            </ng-container>
+            <ng-template #is_null
+              ><button
+                mat-flat-button
+                color="primary"
+                style="
+                  margin-right: 16px;
+                  width: 160px;
+                  background-color: #58cccc;
+                  color: white;
+                  font-size: 0.9rem;
+                "
+                (click)="addUpdatePhoto(data)"
+              >
+                เพิ่มรูปภาพสัญญาเช่า
+              </button>
+            </ng-template>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4" *ngIf="input.value">
+          ไม่พบ "{{ input.value }}" ในตาราง
+        </td>
+        <td class="mat-cell" colspan="4" *ngIf="input.value === ''">
+          ไม่มีข้อมูลในตาราง
+        </td>
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>
+</div>

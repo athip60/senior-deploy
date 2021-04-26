@@ -1,0 +1,165 @@
+<div>
+  <div>
+    <span style="float: right; cursor: pointer">
+      <mat-icon
+        aria-hidden="false"
+        (click)="closeDialog()"
+        aria-label="Example home icon"
+        >close</mat-icon
+      >
+    </span>
+    <span style="float: left; cursor: pointer; margin-right: 20px">
+      <p style="font-size: 1.7rem">ข้อมูลห้อง {{ data.data.room_number }}</p>
+    </span>
+    <mat-icon
+      aria-hidden="false"
+      aria-label="bin icon"
+      style="color: rgb(204, 204, 204)"
+      (click)="deleteRoom(data.data)"
+    >
+      delete
+    </mat-icon>
+  </div>
+</div>
+<div mat-dialog-content style="margin-top: 10px">
+  <div
+    xFlex
+    style="padding-top: 5%"
+    *ngIf="data.data && data.data.room_status !== 'มีผู้เข้าพัก'"
+  >
+    <div style="margin-left: 20px">
+      <p style="font-size: 1rem; color: #818e9b">สถานะห้อง</p>
+      <p style="font-size: 1.2rem; margin-left: 20px">
+        {{ data.data.room_status }}
+      </p>
+      <p style="font-size: 1rem; color: #818e9b">หมายเหตุ</p>
+      <p
+        *ngIf="data.data.note === null"
+        style="font-size: 1.2rem; margin-left: 20px"
+      >
+        -
+      </p>
+      <p
+        *ngIf="data.data.note !== null"
+        style="font-size: 1.2rem; margin-left: 20px"
+      >
+        {{ data.data.note }}
+      </p>
+    </div>
+    <button
+      (click)="openInsertDataRoomDialog(data.data)"
+      style="
+        margin-top: 5%;
+        width: 100%;
+        font-size: 1.1rem;
+        background-color: #424b54;
+        color: #ebcfb8;
+      "
+      mat-raised-button
+    >
+      แก้ไขข้อมูล
+    </button>
+  </div>
+  <!-- มีผู้เข้าพัก -->
+  <div
+    xFlex
+    style="padding-top: 5%"
+    *ngIf="data.data && data.data.room_status === 'มีผู้เข้าพัก'"
+  >
+    <div style="margin-left: 20px">
+      <p style="font-size: 1rem; color: #818e9b">สถานะห้อง</p>
+      <p style="font-size: 1.2rem; margin-left: 20px">
+        {{ data.data.room_status }}
+      </p>
+      <p style="font-size: 1rem; color: #818e9b">ชื่อ - นามสกุล</p>
+      <p style="font-size: 1.2rem; margin-left: 20px">
+        {{ data.data.name + " " + data.data.surname }}
+      </p>
+      <p style="font-size: 1rem; color: #818e9b">อีเมลล์</p>
+      <p style="font-size: 1.2rem; margin-left: 20px">
+        {{ data.data.email }}
+      </p>
+      <p style="font-size: 1rem; color: #818e9b">เบอร์โทรศัพท์</p>
+      <p style="font-size: 1.2rem; margin-left: 20px">
+        {{ data.data.tel }}
+      </p>
+      <p style="font-size: 1rem; color: #818e9b">สัญญาเช่า</p>
+      <p
+        style="
+          font-size: 1.2rem;
+          margin-left: 20px;
+          text-decoration: underline;
+          color: #2bc98f;
+        "
+        (click)="viewImg(data.data.room_number)"
+        *ngIf="data.data.lease_status === 'บันทึกสัญญาเรียบร้อยแล้ว'"
+      >
+        {{ data.data.lease_status }}
+      </p>
+      <a
+        routerLink="/owner/lease-agreement"
+        *ngIf="data.data.lease_status !== 'บันทึกสัญญาเรียบร้อยแล้ว'"
+        style="color: #f3b435; text-decoration-color: #f3b435"
+        (click)="closeDialog()"
+      >
+        <p style="font-size: 1.2rem; margin-left: 20px">
+          {{ data.data.lease_status }}
+        </p>
+      </a>
+      <p style="font-size: 1rem; color: #818e9b">สถานะการจ่ายเงิน</p>
+      <p
+        *ngIf="data.data.status_bill === null"
+        style="font-size: 1.2rem; margin-left: 20px"
+      >
+        -
+      </p>
+      <p
+        *ngIf="data.data.status_bill !== null"
+        style="font-size: 1.2rem; margin-left: 20px"
+      >
+        {{ data.data.status_bill }}
+      </p>
+      <p style="font-size: 1rem; color: #818e9b">หมายเหตุ</p>
+      <p
+        *ngIf="data.data.note === null"
+        style="font-size: 1.2rem; margin-left: 20px"
+      >
+        -
+      </p>
+      <p
+        *ngIf="data.data.note !== null"
+        style="font-size: 1.2rem; margin-left: 20px"
+      >
+        {{ data.data.note }}
+      </p>
+    </div>
+    <button
+      *ngIf="data.data.lease_status !== 'บันทึกสัญญาเรียบร้อยแล้ว'"
+      (click)="openInsertDataRoomDialog(data.data)"
+      style="
+        width: 100%;
+        font-size: 1.1rem;
+        background-color: #424b54;
+        color: #ebcfb8;
+        margin-top: 5%;
+      "
+      mat-raised-button
+    >
+      แก้ไขข้อมูล
+    </button>
+    <button
+      *ngIf="data.data.lease_status === 'บันทึกสัญญาเรียบร้อยแล้ว'"
+      (click)="moveOut(data.data)"
+      style="
+        width: 100%;
+        font-size: 1.1rem;
+        background-color: #424b54;
+        color: #ebcfb8;
+        margin-top: 5%;
+      "
+      mat-raised-button
+    >
+      ย้ายออก
+    </button>
+  </div>
+</div>

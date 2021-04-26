@@ -1,0 +1,196 @@
+<ng-container *ngIf="data.nameGraph === 'circle-graph'; else graphLine">
+  <div style="margin-bottom: 30px">
+    <span style="float: right; cursor: pointer">
+      <mat-icon
+        aria-hidden="false"
+        (click)="closeDialog()"
+        aria-label="Example home icon"
+        >close</mat-icon
+      >
+    </span>
+    <h1 mat-dialog-title>รายละเอียดข้อมูลกราฟวงกลม</h1>
+  </div>
+  <div mat-dialog-content>
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
+      <!-- รายรับ -->
+      <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="50%">
+        <mat-card class="mat-elevation-z5 card-total">
+          <mat-card-content>
+            <div
+              style="
+                justify-content: space-between;
+                display: flex;
+                margin-top: 14px;
+              "
+            >
+              <mat-icon
+                style="color: #fbc658; font-size: 3.5rem; margin-top: 20px"
+                inline
+                >monetization_on</mat-icon
+              >
+              <div>
+                <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                  รายรับ
+                </p>
+                <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                  {{ data.dataMonth[0] | currency }}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!-- รายจ่าย -->
+      <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="50%">
+        <mat-card class="mat-elevation-z5 card-total">
+          <mat-card-content>
+            <div
+              style="
+                justify-content: space-between;
+                display: flex;
+                margin-top: 14px;
+              "
+            >
+              <mat-icon
+                style="color: #f17e5d; font-size: 3.5rem; margin-top: 20px"
+                inline
+                >money_off</mat-icon
+              >
+              <div>
+                <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                  รายจ่าย
+                </p>
+                <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                  {{ data.dataMonth[1] | currency }}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div style="margin-top: 20px">
+      <table>
+        <h2>รายการทั้งหมด</h2>
+        <tr>
+          <th>วันที่</th>
+          <th>รายการ</th>
+          <th>รายรับ</th>
+          <th>รายจ่าย</th>
+        </tr>
+        <tr *ngFor="let data of monthInconme">
+          <td>{{ data.date }}</td>
+          <td>{{ data.program }}</td>
+          <td>{{ data.credit | currency }}</td>
+          <td>{{ data.debit | currency }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-container>
+<ng-template #graphLine>
+  <div style="margin-bottom: 30px">
+    <span style="float: right; cursor: pointer">
+      <mat-icon
+        aria-hidden="false"
+        (click)="closeDialog()"
+        aria-label="Example home icon"
+        >close</mat-icon
+      >
+    </span>
+    <h1 mat-dialog-title>รายละเอียดข้อมูลกราฟเส้น</h1>
+  </div>
+  <div mat-dialog-content>
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
+      <!-- รายรับ -->
+      <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="50%">
+        <mat-card class="mat-elevation-z5 card-total">
+          <mat-card-content>
+            <div
+              style="
+                justify-content: space-between;
+                display: flex;
+                margin-top: 14px;
+              "
+            >
+              <mat-icon
+                style="color: #fbc658; font-size: 3.5rem; margin-top: 20px"
+                inline
+                >monetization_on</mat-icon
+              >
+              <div>
+                <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                  รายรับ
+                </p>
+                <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                  {{ data.creditYear | currency }}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <!-- รายจ่าย -->
+      <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="50%">
+        <mat-card class="mat-elevation-z5 card-total">
+          <mat-card-content>
+            <div
+              style="
+                justify-content: space-between;
+                display: flex;
+                margin-top: 14px;
+              "
+            >
+              <mat-icon
+                style="color: #f17e5d; font-size: 3.5rem; margin-top: 20px"
+                inline
+                >money_off</mat-icon
+              >
+              <div>
+                <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                  รายจ่าย
+                </p>
+                <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                  {{ data.debitYear | currency }}
+                </p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <h2>รายการทั้งหมด</h2>
+      <h3 style="font-size: 1.05rem">รายรับ</h3>
+      <table>
+        <tr>
+          <th>วันที่</th>
+          <th>รายการ</th>
+          <th>รายรับ</th>
+        </tr>
+        <tr *ngFor="let data of yearInconme">
+          <ng-container *ngIf="data.credit !== 0">
+            <td>{{ data.date }}</td>
+            <td>{{ data.program }}</td>
+            <td>{{ data.credit | currency }}</td>
+          </ng-container>
+        </tr>
+      </table>
+      <h3 style="font-size: 1.05rem; margin-top: 20px">รายรับ</h3>
+      <table>
+        <tr>
+          <th>วันที่</th>
+          <th>รายการ</th>
+          <th>รายจ่าย</th>
+        </tr>
+        <tr *ngFor="let data of yearInconme">
+          <ng-container *ngIf="data.debit !== 0">
+            <td>{{ data.date }}</td>
+            <td>{{ data.program }}</td>
+            <td>{{ data.debit | currency }}</td>
+          </ng-container>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-template>

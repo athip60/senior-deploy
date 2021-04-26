@@ -1,0 +1,64 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>แก้ไขข้อมูลผู้ใช้งาน</h1>
+</div>
+<div mat-dialog-content>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label>เลือกประเภทผู้ใช้งาน</mat-label>
+        <mat-select
+          name="role_user"
+          [(ngModel)]="form.role_user"
+          required
+          #role_user="ngModel"
+        >
+          <mat-option value="user">ผู้ใช้งาน</mat-option>
+          <mat-option value="guest">ผู้เข้าพัก</mat-option>
+          <mat-option value="owner">เจ้าของหอพัก</mat-option>
+        </mat-select>
+        <mat-hint>
+          <div *ngIf="f.submitted && role_user.invalid">
+            <div *ngIf="role_user.errors.required" class="hint-message">
+              กรุณาเลือกประเภทผู้ใช้งานชื่อผู้ใช้งาน
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p style="text-align: center">
+      <button
+        style="
+          width: 200px;
+          margin-right: 5%;
+          background-color: #424b54;
+          color: #ebcfb8;
+        "
+        mat-raised-button
+        type="submit"
+      >
+        แก้ไขข้อมูล
+      </button>
+    </p>
+  </form>
+</div>

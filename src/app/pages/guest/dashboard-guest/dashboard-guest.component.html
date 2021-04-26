@@ -1,0 +1,200 @@
+<div class="content">
+  <div fxLayout="row" fxLayoutGap="20px">
+    <div fxFlex="65%">
+      <div fxLayout="column wrap" style="margin-bottom: 20px">
+        <!-- กราฟ -->
+        <div fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="100%">
+          <mat-card class="mat-elevation-z5" style="text-align: center">
+            <mat-card-header style="margin-bottom: 10px">
+              <mat-card-title style="font-size: 1.25rem"
+                >ช่องโพสต์</mat-card-title
+              >
+            </mat-card-header>
+            <mat-card-content>
+              <form
+                name="form"
+                (ngSubmit)="f.form.valid && onSubmit()"
+                #f="ngForm"
+                novalidate
+              >
+                <div style="margin-bottom: 10px">
+                  <mat-form-field
+                    appearance="fill"
+                    style="width: 100%"
+                    [hideRequiredMarker]="true"
+                  >
+                    <textarea
+                      matInput
+                      type="text"
+                      required
+                      name="content"
+                      [(ngModel)]="form.content"
+                      #content="ngModel"
+                      style="font-size: 1rem"
+                    >
+                    </textarea>
+                    <mat-hint>
+                      <div *ngIf="f.submitted && content.invalid">
+                        <div
+                          *ngIf="content.errors.required"
+                          class="hint-message"
+                        >
+                          กรุณากรอกข้อมูล
+                        </div>
+                      </div>
+                    </mat-hint>
+                  </mat-form-field>
+                </div>
+                <div style="text-align: left">
+                  <button
+                    style="
+                      width: 200px;
+                      background-color: #424b54;
+                      color: #ebcfb8;
+                    "
+                    mat-raised-button
+                    type="submit"
+                  >
+                    โพสต์
+                  </button>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <hr class="hr-text" data-content="คอมเม้นต์ทั้งหมด" />
+      <div fxLayout="column wrap" fxLayoutGap="12px" style="margin-top: 20px">
+        <ng-container *ngFor="let posts of post_data">
+          <div fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="100%">
+            <mat-card class="mat-elevation-z5" style="min-height: 10vw">
+              <ng-container
+                *ngIf="userLogin === posts.user_post; else notEqual"
+              >
+                <span style="float: right">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="updatePost(posts)">
+                      <mat-icon>create</mat-icon>
+                      <span>แก้ไขโพสต์</span>
+                    </button>
+                    <button mat-menu-item (click)="delete(posts.id)">
+                      <mat-icon>delete</mat-icon>
+                      <span>ลบโพสต์</span>
+                    </button>
+                  </mat-menu>
+                </span>
+              </ng-container>
+              <ng-template #notEqual>
+                <span style="float: right">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu"> </mat-menu>
+                </span>
+              </ng-template>
+
+              <mat-card-header style="padding-bottom: 25px">
+                <mat-card-title>{{ posts.name_user_post }}</mat-card-title>
+                <mat-card-subtitle
+                  >ส่งถึง {{ posts.name_user_send_from }} วันที่
+                  {{
+                    posts.createdAt | date: "d/M/y, เวลา H:mm":"th-TH"
+                  }}</mat-card-subtitle
+                >
+              </mat-card-header>
+              <mat-card-content>
+                <p style="font-size: 1.15rem">
+                  {{ posts.content }}
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button
+                  mat-stroked-button
+                  style="width: 100%"
+                  (click)="viewComment(posts.id)"
+                >
+                  ดูคอมเมนต์
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div fxFlex="35%">
+      <div fxLayout="column" fxLayoutGap="20px">
+        <div fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="100%">
+          <mat-card
+            (click)="routerTo('bill')"
+            class="mat-elevation-z5 card-total"
+          >
+            <mat-card-content>
+              <div
+                style="
+                  justify-content: space-between;
+                  display: flex;
+                  margin-top: 14px;
+                "
+              >
+                <mat-icon
+                  style="color: #fbc658; font-size: 3.5rem; margin-top: 20px"
+                  inline
+                  >monetization_on</mat-icon
+                >
+                <div>
+                  <p
+                    style="color: #66615b; font-size: 1.2rem; text-align: right"
+                  >
+                    ค่าใช้จ่ายทั้งหมด
+                  </p>
+                  <p
+                    style="color: #000000; font-size: 1.6rem; text-align: right"
+                  >
+                    {{ totalCost | currency }}
+                  </p>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div fxFlex="100%" fxFlex.xs="100%" fxFlex.sm="100%">
+          <mat-card
+            (click)="routerTo('bill')"
+            class="mat-elevation-z5 card-total"
+          >
+            <mat-card-content>
+              <div
+                style="
+                  justify-content: space-between;
+                  display: flex;
+                  margin-top: 14px;
+                "
+              >
+                <mat-icon
+                  style="color: #f17e5d; font-size: 3.5rem; margin-top: 20px"
+                  inline
+                  >hourglass_full</mat-icon
+                >
+                <div>
+                  <p
+                    style="color: #66615b; font-size: 1.2rem; text-align: right"
+                  >
+                    ค้างชำระ
+                  </p>
+                  <p
+                    style="color: #000000; font-size: 1.6rem; text-align: right"
+                  >
+                    {{ overdue | currency }}
+                  </p>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

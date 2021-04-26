@@ -1,0 +1,58 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>แก้ไขโพสต์</h1>
+</div>
+<div mat-dialog-content>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <div style="margin-bottom: 20px">
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <textarea
+          matInput
+          type="text"
+          required
+          name="content"
+          [(ngModel)]="form.content"
+          #content="ngModel"
+          style="font-size: 1rem"
+        >
+        </textarea>
+        <mat-hint>
+          <div *ngIf="f.submitted && content.invalid">
+            <div *ngIf="content.errors.required" class="hint-message">
+              กรุณากรอกข้อมูล
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div style="text-align: left">
+      <button
+        style="width: 200px; background-color: #424b54; color: #ebcfb8"
+        mat-raised-button
+        type="submit"
+      >
+        โพสต์
+      </button>
+    </div>
+  </form>
+</div>

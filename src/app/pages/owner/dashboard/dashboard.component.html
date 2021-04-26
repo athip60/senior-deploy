@@ -1,0 +1,247 @@
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="20px grid">
+    <!-- รายรับ -->
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%">
+      <mat-card
+        (click)="routerTo('income')"
+        class="mat-elevation-z5 card-total"
+      >
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+            "
+          >
+            <mat-icon
+              style="color: #fbc658; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >monetization_on</mat-icon
+            >
+            <div>
+              <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                รายรับปี {{ year + 543 }}
+              </p>
+              <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                {{ creditYear | currency }}
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- รายจ่าย -->
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%">
+      <mat-card
+        (click)="routerTo('income')"
+        class="mat-elevation-z5 card-total"
+      >
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+            "
+          >
+            <mat-icon
+              style="color: #f17e5d; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >money_off</mat-icon
+            >
+            <div>
+              <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                รายจ่ายปี {{ year + 543 }}
+              </p>
+              <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                {{ debitYear | currency }}
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- จำนวนห้องทั้งหมด -->
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%">
+      <mat-card (click)="routerTo('room')" class="mat-elevation-z5 card-total">
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+            "
+          >
+            <mat-icon
+              style="color: #7ed6a5; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >location_city</mat-icon
+            >
+            <div>
+              <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                จำนวนห้องพัก
+              </p>
+              <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                {{ room_all.length }} ห้อง
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- จำนวนผู้ใช้ทั้งหมด -->
+    <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="50%">
+      <mat-card
+        (click)="routerTo('user-data')"
+        class="mat-elevation-z5 card-total"
+      >
+        <mat-card-content>
+          <div
+            style="
+              justify-content: space-between;
+              display: flex;
+              margin-top: 14px;
+            "
+          >
+            <mat-icon
+              style="color: #4acccd; font-size: 3.5rem; margin-top: 20px"
+              inline
+              >assignment_ind</mat-icon
+            >
+            <div>
+              <p style="color: #66615b; font-size: 1.2rem; text-align: right">
+                จำนวนผู้ใช้ในระบบ
+              </p>
+              <p style="color: #000000; font-size: 1.6rem; text-align: right">
+                {{ user_data_all.length }} คน
+              </p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- กราฟกลม -->
+    <div fxFlex="35%" fxFlex.xs="100%" fxFlex.sm="25%">
+      <mat-card class="mat-elevation-z5" style="min-height: 18vw">
+        <mat-card-header style="padding-bottom: 25px">
+          <mat-card-title
+            >กราฟกลมรายรับรายจ่ายเดือน{{ monthArr[month] }} ปี
+            {{ year + 543 }}</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <canvas id="chartCircle"></canvas>
+        </mat-card-content>
+        <mat-card-actions
+          style="padding: 12px; display: flex; justify-content: space-between"
+        >
+          <div>
+            <mat-icon style="color: #4acccd; font-size: 1.2rem" inline
+              >fiber_manual_record</mat-icon
+            >
+            <span style="margin-right: 5px; color: #66615b; font-size: 1rem"
+              >รายรับ</span
+            >
+            <mat-icon style="color: #f17e5d; font-size: 1.2rem" inline
+              >fiber_manual_record</mat-icon
+            >
+            <span style="color: #66615b; font-size: 1rem">รายจ่าย</span>
+          </div>
+          <div>
+            <button
+              mat-stroked-button
+              fxFlex="100%"
+              style="color: #66615b"
+              (click)="openDialogGraph('circle-graph')"
+            >
+              ดูรายละเอียด
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <!-- กราฟเส้น -->
+    <div fxFlex="65%" fxFlex.xs="100%" fxFlex.sm="75%">
+      <mat-card
+        class="mat-elevation-z5"
+        style="min-height: 10vw"
+      >
+        <mat-card-header style="padding-bottom: 25px">
+          <mat-card-title
+            >กราฟเส้นรายรับรายจ่ายปี {{ year + 543 }}</mat-card-title
+          >
+        </mat-card-header>
+        <mat-card-content>
+          <canvas id="speedLine" width="400" height="104"></canvas>
+        </mat-card-content>
+        <mat-card-actions
+          style="padding: 12px; display: flex; justify-content: space-between"
+        >
+          <div>
+            <mat-icon style="color: #4acccd; font-size: 1.2rem" inline
+              >fiber_manual_record</mat-icon
+            >
+            <span style="margin-right: 5px; color: #66615b; font-size: 1rem"
+              >รายรับ</span
+            >
+            <mat-icon style="color: #fbc658; font-size: 1.2rem" inline
+              >fiber_manual_record</mat-icon
+            >
+            <span style="color: #66615b; font-size: 1rem">รายจ่าย</span>
+          </div>
+          <div>
+            <button
+              mat-stroked-button
+              fxFlex="100%"
+              style="color: #66615b"
+              (click)="openDialogGraph('line-graph')"
+            >
+              ดูรายละเอียด
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <!-- ข้อมูลรายละเอียดห้องพัก -->
+    <div fxFlex="30%" fxFlex.xs="100%" fxFlex.sm="50%">
+      <mat-card
+        (click)="routerTo('room')"
+        class="mat-elevation-z5 card-total"
+        style="min-height: 15vw"
+      >
+        <mat-card-header style="padding-bottom: 25px">
+          <mat-card-title>ข้อมูลรายละเอียดห้องพัก</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas id="chartBarHorizon"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!-- ผู้ใช้งานใหม่ -->
+    <div fxFlex="70%" fxFlex.xs="100%" fxFlex.sm="50%">
+      <mat-card
+        (click)="routerTo('user-data')"
+        class="mat-elevation-z5 card-total"
+        style="min-height: 15vw"
+      >
+        <mat-card-header style="padding-bottom: 25px">
+          <mat-card-title>ผู้ใช้งานใหม่</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="height: 200px; overflow-y: auto">
+          <ng-container *ngFor="let user of user_data_all">
+            <div style="justify-content: space-around; display: flex">
+              <p style="font-size: 1.01rem">
+                {{ user.name }}
+              </p>
+              <p style="font-size: 1.01rem">
+                {{ user.createdAt }}
+              </p>
+            </div>
+            <hr />
+          </ng-container>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

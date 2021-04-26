@@ -1,0 +1,59 @@
+*,
+h3,
+h1 {
+  font-family: maledpan;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  background-image: linear-gradient(to right, #424b54 0%, #6c7074 50%, #424b54 100%,);
+}
+
+.content {
+  margin: auto;
+  padding: 5vh 15px;
+  width: 80vw;
+  height: 80vh;
+  border-radius: 50px;
+  background-color: white;
+}
+
+.register-button {
+  font-size: 1rem;
+  text-decoration: none;
+  color: #424b54;
+}
+
+.copyright {
+  margin-top: 5vw;
+  text-align: center;
+  color: rgb(192, 192, 192);
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  color: #424b54 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #424b54;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #424b54 !important;
+  opacity: 1px !important;
+}
+
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick{
+  color: red!important;
+  opacity: 0.8!important;
+}
+
+.hint-message{
+  font-size: 0.9rem;
+}

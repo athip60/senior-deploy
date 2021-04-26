@@ -1,0 +1,67 @@
+* {
+  font-family: maledpan;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+.content {
+  padding: 2% 6% 2% 6%;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+
+.mat-card {
+  border-radius: 10px;
+}
+
+.card-total {
+  max-height: 100vw;
+  min-height: 5vw;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  font-size: 1.1rem;
+}
+
+td {
+  font-size: 0.95rem;
+}
+
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+#add_lease {
+  button.mat-focus-indicator {
+    margin-top: 15px;
+  }
+}
+
+.card-total {
+  max-height: 100vw;
+  min-height: 8vw;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #424b54 !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #424b54 !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: #424b54 !important;;
+}

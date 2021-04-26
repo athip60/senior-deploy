@@ -1,0 +1,128 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>แก้ไขข้อมูลห้อง {{ data.data.room_number }}</h1>
+</div>
+<div mat-dialog-content>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label>หมายเลขห้องพัก</mat-label>
+        <input
+          matInput
+          type="number"
+          name="room_number"
+          [(ngModel)]="form.room_number"
+          required
+          #room_number="ngModel"
+        />
+        <mat-hint>
+          <div *ngIf="f.submitted && room_number.invalid">
+            <div *ngIf="room_number.errors.required" class="hint-message">
+              กรุณากรอกหมายเลขห้องพัก
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label>เลือกสถานะห้อง</mat-label>
+        <mat-select
+          name="room_status"
+          [(ngModel)]="form.room_status"
+          required
+          #room_status="ngModel"
+        >
+          <mat-option value="ห้องว่าง">ห้องว่าง</mat-option>
+          <mat-option value="มีผู้เข้าพัก">มีผู้เข้าพัก</mat-option>
+          <mat-option value="ห้องใช้งานไม่ได้">ห้องใช้งานไม่ได้</mat-option>
+        </mat-select>
+        <mat-hint>
+          <div *ngIf="f.submitted && room_status.invalid">
+            <div *ngIf="room_status.errors.required" class="hint-message">
+              กรุณาเลือกผู้ใช้
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <ng-container *ngIf="room_status.value == 'มีผู้เข้าพัก'">
+      <p>
+        <mat-form-field
+          appearance="fill"
+          style="width: 100%"
+          [hideRequiredMarker]="true"
+        >
+          <mat-label>ผู้ใช้</mat-label>
+          <mat-select
+            name="user"
+            [(ngModel)]="form.user"
+            required
+            #user="ngModel"
+          >
+            <ng-container *ngFor="let data of user_data">
+              <mat-option value="{{ data.id }}"
+                >{{ data.name }} {{ data.surname }}</mat-option
+              >
+            </ng-container>
+          </mat-select>
+          <mat-hint>
+            <div *ngIf="f.submitted && user.invalid">
+              <div *ngIf="user.errors.required" class="hint-message">
+                กรุณาเลือกสถานะห้อง
+              </div>
+            </div>
+          </mat-hint>
+        </mat-form-field>
+      </p>
+    </ng-container>
+    <p>
+      <mat-form-field
+        appearance="fill"
+        style="width: 100%"
+        [hideRequiredMarker]="true"
+      >
+        <mat-label>หมายเหตุ</mat-label>
+        <input matInput type="text" name="note" [(ngModel)]="form.note" />
+      </mat-form-field>
+    </p>
+    <p style="text-align: center">
+      <button
+        style="
+          width: 200px;
+          margin-top: 5%;
+          background-color: #424b54;
+          color: #ebcfb8;
+        "
+        mat-raised-button
+        type="submit"
+      >
+        แก้ไขข้อมูล
+      </button>
+    </p>
+  </form>
+</div>

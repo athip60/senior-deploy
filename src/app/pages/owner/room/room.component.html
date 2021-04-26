@@ -1,0 +1,378 @@
+<div class="content">
+  <!-- จอเต็ม -->
+  <div
+    *ngIf="change == 'lg'; else not_lg"
+    fxLayout="row"
+    fxLayoutAlign="space-between stretch"
+    fxLayoutGap="20px"
+  >
+    <!-- list ห้อง -->
+    <div fxFlex="65%">
+      <div flLayout="column" fxLayoutGap="20px">
+        <button
+          fxFlex="20%"
+          mat-flat-button
+          style="
+            height: 40px;
+            background-color: #424b54;
+            color: #ebcfb8;
+            font-size: 17px;
+          "
+          (click)="openCreateNewRoomDialog()"
+          color="primary"
+        >
+          เพิ่มห้องพัก
+        </button>
+        <mat-form-field fxFlex="80%" appearance="standard">
+          <mat-label style="font-size: 1rem"
+            >กรอกข้อมูลห้องเพื่อค้นหา</mat-label
+          >
+          <input
+            matInput
+            style="font-size: 1rem"
+            (keyup)="applyFilter($event)"
+            #input
+          />
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="20px grid">
+        <div
+          fxFlex="20%"
+          fxFlex.xs="100%"
+          fxFlex.sm="50%"
+          *ngFor="let data of dataSource.filteredData"
+        >
+          <!-- ห้องว่าง -->
+          <mat-card
+            class="mat-elevation-z5 card-total"
+            *ngIf="data.room_status == 'ห้องว่าง'"
+            (click)="showData(data)"
+          >
+            <mat-card-content class="dashboard-card-content">
+              <mat-icon>person </mat-icon>
+              <p>
+                {{ data.room_number }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+          <!-- ห้องใช้ไมไ่ด้ -->
+          <mat-card
+            class="mat-elevation-z5 card-total-cannot"
+            *ngIf="data.room_status == 'ห้องใช้งานไม่ได้'"
+            (click)="showData(data)"
+          >
+            <mat-card-content class="dashboard-card-content">
+              <mat-icon style="color: rgb(58, 58, 58)">person </mat-icon>
+              <p style="color: rgb(58, 58, 58)">
+                {{ data.room_number }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+          <!-- มีผู้เข้าพัก -->
+          <mat-card
+            class="mat-elevation-z5 card-total-success"
+            *ngIf="data.room_status == 'มีผู้เข้าพัก'"
+            (click)="showData(data)"
+          >
+            <mat-card-content class="dashboard-card-content">
+              <mat-icon style="color: rgb(58, 58, 58)">person </mat-icon>
+              <p style="color: rgb(58, 58, 58)">
+                {{ data.room_number }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <!-- หน้าแสดงข้อมูล -->
+    <!-- ห้องว่างหรือ ห้องใช้ไมไ่ด้ -->
+    <div
+      xFlex
+      style="padding-top: 5.1%"
+      *ngIf="show_data && show_data.room_status !== 'มีผู้เข้าพัก'"
+    >
+      <div fxLayout="column">
+        <mat-card
+          class="mat-elevation-z5"
+          style="
+            min-width: 380px;
+            max-width: 350px;
+            min-height: 500px;
+            margin-bottom: 10%;
+          "
+        >
+          <mat-card-content style="margin: 15px">
+            <div>
+              <span style="float: right; cursor: pointer">
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="bin icon"
+                  style="color: rgb(204, 204, 204)"
+                  (click)="deleteRoom(show_data)"
+                >
+                  delete
+                </mat-icon>
+              </span>
+              <p style="font-size: 1.7rem">ห้อง {{ show_data.room_number }}</p>
+            </div>
+            <div style="margin-top: 30px">
+              <p style="font-size: 1rem; color: #818e9b">สถานะห้อง</p>
+              <p style="font-size: 1.2rem; margin-left: 20px">
+                {{ show_data.room_status }}
+              </p>
+              <p style="font-size: 1rem; color: #818e9b">หมายเหตุ</p>
+              <p
+                *ngIf="show_data.note === null"
+                style="font-size: 1.2rem; margin-left: 20px"
+              >
+                -
+              </p>
+              <p
+                *ngIf="show_data.note !== null"
+                style="font-size: 1.2rem; margin-left: 20px"
+              >
+                {{ show_data.note }}
+              </p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions
+            style="margin-top: 490px; margin-bottom: 5px; text-align: center"
+          >
+            <button
+              (click)="openInsertDataRoomDialog(show_data)"
+              style="
+                width: 90%;
+                height: 40px;
+                font-size: 1.1rem;
+                background-color: #424b54;
+                color: #ebcfb8;
+              "
+              mat-raised-button
+            >
+              แก้ไขข้อมูล
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <!-- มีผู้เข้าพัก -->
+    <div
+      xFlex
+      style="padding-top: 5.1%"
+      *ngIf="show_data && show_data.room_status === 'มีผู้เข้าพัก'"
+    >
+      <div fxLayout="column">
+        <mat-card
+          class="mat-elevation-z5"
+          style="
+            min-width: 380px;
+            max-width: 350px;
+            min-height: 500px;
+            margin-bottom: 10%;
+          "
+        >
+          <mat-card-content style="margin: 15px">
+            <div>
+              <span style="float: right; cursor: pointer">
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="bin icon"
+                  style="color: rgb(204, 204, 204)"
+                  (click)="deleteRoom(show_data)"
+                >
+                  delete
+                </mat-icon>
+              </span>
+              <p style="font-size: 1.7rem">ห้อง {{ show_data.room_number }}</p>
+            </div>
+            <div style="margin-top: 30px">
+              <p style="font-size: 1rem; color: #818e9b">สถานะห้อง</p>
+              <p style="font-size: 1.2rem; margin-left: 20px">
+                {{ show_data.room_status }}
+              </p>
+              <p style="font-size: 1rem; color: #818e9b">ชื่อ - นามสกุล</p>
+              <p style="font-size: 1.2rem; margin-left: 20px">
+                {{ show_data.name + " " + show_data.surname }}
+              </p>
+              <p style="font-size: 1rem; color: #818e9b">อีเมลล์</p>
+              <p style="font-size: 1.2rem; margin-left: 20px">
+                {{ show_data.email }}
+              </p>
+              <p style="font-size: 1rem; color: #818e9b">เบอร์โทรศัพท์</p>
+              <p style="font-size: 1.2rem; margin-left: 20px">
+                {{ show_data.tel }}
+              </p>
+              <p style="font-size: 1rem; color: #818e9b">สัญญาเช่า</p>
+              <p
+                style="
+                  font-size: 1.2rem;
+                  margin-left: 20px;
+                  text-decoration: underline;
+                  color: #2bc98f;
+                "
+                (click)="viewImg(show_data.room_number)"
+                *ngIf="show_data.lease_status === 'บันทึกสัญญาเรียบร้อยแล้ว'"
+              >
+                {{ show_data.lease_status }}
+              </p>
+              <a
+                routerLink="/owner/lease-agreement"
+                *ngIf="show_data.lease_status !== 'บันทึกสัญญาเรียบร้อยแล้ว'"
+                style="color: #f3b435; text-decoration-color: #f3b435"
+              >
+                <p style="font-size: 1.2rem; margin-left: 20px">
+                  {{ show_data.lease_status }}
+                </p>
+              </a>
+              <p style="font-size: 1rem; color: #818e9b">สถานะการจ่ายเงิน</p>
+              <p
+                *ngIf="show_data.status_bill === null"
+                style="font-size: 1.2rem; margin-left: 20px"
+              >
+                -
+              </p>
+              <p
+                *ngIf="show_data.status_bill !== null"
+                style="font-size: 1.2rem; margin-left: 20px"
+              >
+                {{ show_data.status_bill }}
+              </p>
+              <p style="font-size: 1rem; color: #818e9b">หมายเหตุ</p>
+              <p
+                *ngIf="show_data.note === null"
+                style="font-size: 1.2rem; margin-left: 20px"
+              >
+                -
+              </p>
+              <p
+                *ngIf="show_data.note !== null"
+                style="font-size: 1.2rem; margin-left: 20px"
+              >
+                {{ show_data.note }}
+              </p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions
+            style="margin-top: 170px; margin-bottom: 5px; text-align: center"
+          >
+            <button
+              *ngIf="show_data.lease_status !== 'บันทึกสัญญาเรียบร้อยแล้ว'"
+              (click)="openInsertDataRoomDialog(show_data)"
+              style="
+                width: 90%;
+                height: 40px;
+                font-size: 1.1rem;
+                background-color: #424b54;
+                color: #ebcfb8;
+              "
+              mat-raised-button
+            >
+              แก้ไขข้อมูล
+            </button>
+            <button
+              *ngIf="show_data.lease_status === 'บันทึกสัญญาเรียบร้อยแล้ว'"
+              (click)="moveOut(show_data)"
+              style="
+                width: 90%;
+                height: 40px;
+                font-size: 1.1rem;
+                background-color: #424b54;
+                color: #ebcfb8;
+              "
+              mat-raised-button
+            >
+              ย้ายออก
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <!-- จอไม่เต็ม -->
+  <ng-template #not_lg>
+    <!-- แสดงข้อมูลห้อง -->
+    <div flLayout="column" fxLayoutGap="10px">
+      <button
+        *ngIf="change !== 'xs'"
+        fxFlex="20%"
+        mat-flat-button
+        style="
+          height: 40px;
+          background-color: #424b54;
+          color: #ebcfb8;
+          font-size: 17px;
+        "
+        (click)="openCreateNewRoomDialog()"
+      >
+        เพิ่มห้องพัก
+      </button>
+      <button
+        *ngIf="change === 'xs'"
+        fxFlex="20%"
+        mat-flat-button
+        style="
+          height: 40px;
+          background-color: #424b54;
+          color: #ebcfb8;
+          font-size: 1rem;
+        "
+        (click)="openCreateNewRoomDialog()"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      <mat-form-field fxFlex="80%" appearance="standard">
+        <mat-label>ค้นหาข้อมูลผู้ใช้</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input />
+      </mat-form-field>
+    </div>
+    <!-- list ห้อง -->
+    <div fxLayout="row wrap" fxLayoutGap="20px grid">
+      <div
+        fxFlex="20%"
+        fxFlex.xs="100%"
+        fxFlex.sm="50%"
+        *ngFor="let data of dataSource.filteredData"
+      >
+        <!-- ห้องว่าง -->
+        <mat-card
+          class="mat-elevation-z5 card-total"
+          *ngIf="data.room_status == 'ห้องว่าง'"
+          (click)="openDialogShowData(data)"
+        >
+          <mat-card-content class="dashboard-card-content">
+            <mat-icon>person </mat-icon>
+            <p>
+              {{ data.room_number }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+        <!-- ห้องใช้ไมไ่ด้ -->
+        <mat-card
+          class="mat-elevation-z5 card-total-cannot"
+          *ngIf="data.room_status == 'ห้องใช้งานไม่ได้'"
+          (click)="openDialogShowData(data)"
+        >
+          <mat-card-content class="dashboard-card-content">
+            <mat-icon style="color: rgb(58, 58, 58)">person </mat-icon>
+            <p style="color: rgb(58, 58, 58)">
+              {{ data.room_number }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+        <!-- มีผู้เข้าพัก -->
+        <mat-card
+          class="mat-elevation-z5 card-total-success"
+          *ngIf="data.room_status == 'มีผู้เข้าพัก'"
+          (click)="openDialogShowData(data)"
+        >
+          <mat-card-content class="dashboard-card-content">
+            <mat-icon style="color: rgb(58, 58, 58)">person </mat-icon>
+            <p style="color: rgb(58, 58, 58)">
+              {{ data.room_number }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </ng-template>
+</div>

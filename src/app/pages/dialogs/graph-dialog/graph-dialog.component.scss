@@ -1,0 +1,48 @@
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+h2,
+h3,
+h1,
+* {
+  font-family: maledpan;
+}
+.example-container .mat-form-field + .mat-form-field {
+  margin-left: 12px;
+}
+.hint-message {
+  font-size: 15px;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+
+.mat-card {
+  border-radius: 10px;
+}
+
+.card-total {
+  cursor: pointer;
+  max-height: 100vw;
+  min-height: 5vw;
+}
+
+.card-total:hover {
+  background-color: whitesmoke;
+}
+
+table {
+  width: 100%;
+}
+
+td, th {
+  text-align: center;
+  padding: 8px;
+}
+th{
+  font-size: 1.01rem;
+}
+td{
+  font-size: 0.98rem;
+}

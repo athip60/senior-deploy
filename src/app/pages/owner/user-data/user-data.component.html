@@ -1,0 +1,161 @@
+<div class="content">
+  <div flLayout="column" fxLayoutGap.xs="0px">
+    <mat-form-field fxFlex appearance="standard">
+      <mat-label style="font-size: 1rem">กรอกข้อมูลผู้ใช้เพื่อค้นหา</mat-label>
+      <input
+        style="font-size: 1rem"
+        matInput
+        (keyup)="applyFilter($event)"
+        #input
+      />
+    </mat-form-field>
+  </div>
+  <div class="mat-elevation-z5">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- เลขห้อง -->
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ห้อง</th>
+        <td mat-cell *matCellDef="let data">
+          <ng-container *ngIf="data.room_number">
+            <div style="text-align: center">
+              {{ data.room_number }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!data.room_number">
+            <div style="text-align: center">-</div>
+          </ng-container>
+        </td>
+      </ng-container>
+      <!--อีเมลล์ -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>อีเมลล์</th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.email }}
+          </div>
+        </td>
+      </ng-container>
+      <!-- ชื่อ -->
+      <ng-container matColumnDef="fulname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          ชื่อ - นามสกุล
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.name }} {{ data.surname }}
+          </div>
+        </td>
+      </ng-container>
+      <!-- เบอร์โทร -->
+      <ng-container matColumnDef="tel">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>เบอร์โทรศัพท์</th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.tel }}
+          </div>
+        </td>
+      </ng-container>
+      <!-- Role -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>สถานะ</th>
+        <td mat-cell *matCellDef="let data">
+          <ng-container *ngIf="data.role_user === 'user'">
+            <div style="text-align: center">ผู้ใช้ในระบบ</div>
+          </ng-container>
+          <ng-container *ngIf="data.role_user === 'guest'">
+            <div style="text-align: center">ผู้เข้าพัก</div>
+          </ng-container>
+          <ng-container *ngIf="data.role_user === 'owner'">
+            <div style="text-align: center">เจ้าของหอพัก</div>
+          </ng-container>
+        </td>
+      </ng-container>
+      <!-- สถานะชำระเงิน -->
+      <ng-container matColumnDef="bill">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          สถานะการชำระเงิน
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <ng-container *ngIf="data.status_bill">
+            <div style="text-align: center">
+              {{ data.status_bill }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!data.status_bill">
+            <p style="text-align: center">-</p>
+          </ng-container>
+        </td>
+      </ng-container>
+      <!-- สัญญาเช่า -->
+      <ng-container matColumnDef="lease">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>สัญญาเช่า</th>
+        <td mat-cell *matCellDef="let data">
+          <ng-container *ngIf="data.lease_status; else null">
+            <div style="text-align: center">
+              {{ data.lease_status }}
+            </div>
+          </ng-container>
+          <ng-template #null>
+            <p style="text-align: center">-</p>
+          </ng-template>
+        </td>
+      </ng-container>
+      <!-- วันที่สมัคร  -->
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          วันที่สมัครสมาชิก
+        </th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            {{ data.dateTranform }}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <td mat-cell *matCellDef="let data">
+          <div style="text-align: center">
+            <button
+              (click)="editUser(data)"
+              mat-flat-button
+              style="
+                background-color: #ffbc35;
+                color: white;
+                margin-right: 20px;
+                width: 100px;
+                font-size: 0.99rem;
+              "
+            >
+              แก้ไขข้อมูล
+            </button>
+            <button
+              mat-flat-button
+              (click)="deleteUser(data.id, data.lease_status)"
+              style="
+                background-color: #ff6262;
+                color: white;
+                width: 100px;
+                font-size: 0.9rem;
+              "
+            >
+              ลบข้อมูล
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4" *ngIf="input.value">
+          ไม่พบ "{{ input.value }}" ในตาราง
+        </td>
+        <td class="mat-cell" colspan="4" *ngIf="input.value === ''">
+          ไม่มีข้อมูลในตาราง
+        </td>
+      </tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+  </div>
+</div>

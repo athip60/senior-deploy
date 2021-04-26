@@ -1,0 +1,580 @@
+<div class="container">
+  <ng-container *ngIf="change == 'lg'; else not_lg">
+    <div
+      class="content"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="20px"
+    >
+      <div fxFlex="60%">
+        <img
+          style="padding: 5%; width: 45vw"
+          src="../../../../assets/images/apartment.png"
+          alt="computer icon"
+        />
+      </div>
+      <div fxFlex="40%" style="padding: 5%; height: 90vh">
+        <h1
+          fxLayoutAlign="center start"
+          style="font-size: 2.5rem; margin-bottom: 2vw"
+        >
+          Schlaf สมัครสมาชิก
+        </h1>
+        <form
+          fxLayout="column"
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+          fxLayoutGap="0px"
+        >
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ชื่อผู้ใช้งาน</mat-label>
+              <input
+                matInput
+                placeholder="ชื่อผู้ใช้งาน"
+                type="text"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                minlength="8"
+                maxlength="20"
+                #username="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required" class="hint-message">
+                    กรุณากรอกชื่อผู้ใช้งาน
+                  </div>
+                  <div *ngIf="username.errors.minlength || username.errors.maxlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่น้อยกว่า 3 ตัวอักษร และไม่เกิน 20 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>อีเมลล์</mat-label>
+              <input
+                matInput
+                placeholder="อีเมลล์"
+                type="email"
+                name="email"
+                [(ngModel)]="form.email"
+                required
+                email
+                #email="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required" class="hint-message">
+                    กรุณากรอกชื่อผู้ใช้งาน
+                  </div>
+                  <div *ngIf="username.errors.minlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่น้อยกว่า 3 ตัวอักษร
+                  </div>
+                  <div *ngIf="username.errors.maxlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่เกิน 20 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>รหัสผ่าน</mat-label>
+              <input
+                matInput
+                placeholder="รหัสผ่าน"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="8"
+                #password="ngModel"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-hint>
+                <div *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required" class="hint-message">
+                    กรุณากรอกรหัสผ่าน
+                  </div>
+                  <div *ngIf="password.errors.minlength" class="hint-message">
+                    รหัสผ่านต้องมีไม่น้อยกว่า 8 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ยืนยันรหัสผ่าน</mat-label>
+              <input
+                matInput
+                placeholder="ยืนยันรหัสผ่าน"
+                [type]="hideConfirm ? 'password' : 'text'"
+                name="confirmPassword"
+                [(ngModel)]="form.confirmPassword"
+                required
+                #confirmPassword="ngModel"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hideConfirm = !hideConfirm"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>
+                  {{ hideConfirm ? "visibility_off" : "visibility" }}
+                </mat-icon>
+              </button>
+              <mat-hint>
+                <div *ngIf="f.submitted && confirmPassword.invalid">
+                  <div
+                    *ngIf="confirmPassword.errors.required"
+                    class="hint-message"
+                  >
+                    กรุณากรอกรหัสผ่าน
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <div
+            fxLayout="row"
+            fxLayout.md="column"
+            fxLayout.sm="column"
+            fxLayout.xs="column"
+            fxLayoutGap="7px"
+          >
+            <mat-form-field
+              fxFlex="49%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ชื่อ</mat-label>
+              <input
+                matInput
+                placeholder="ชื่อ"
+                required
+                name="name"
+                [(ngModel)]="form.name"
+                #name="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && name.invalid">
+                  <div *ngIf="name.errors.required" class="hint-message">
+                    กรุณากรอกชื่อ
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field
+              fxFlex="49%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>นามสกุล</mat-label>
+              <input
+                matInput
+                placeholder="นามสกุล"
+                required
+                name="surname"
+                [(ngModel)]="form.surname"
+                #surname="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && surname.invalid">
+                  <div *ngIf="surname.errors.required" class="hint-message">
+                    กรุณากรอกนามสกุล
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>เบอร์โทรศัพท์</mat-label>
+              <input
+                matInput
+                placeholder="เบอร์โทรศัพท์"
+                required
+                minlength="10"
+                name="tel"
+                [(ngModel)]="form.tel"
+                #tel="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && tel.invalid">
+                  <div *ngIf="tel.errors.required" class="hint-message">
+                    กรุณากรอกเบอร์โทรศัพท์
+                  </div>
+                  <div *ngIf="tel.errors.minlength" class="hint-message">
+                    เบอร์โทรศัพท์ต้องมี 10 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <button
+              mat-raised-button
+              fxFlex="100%"
+              type="submit"
+              style="
+                font-size: 1rem;
+                background-color: #424b54;
+                color: #ebcfb8;
+                margin-top: 1vw;
+              "
+            >
+              สมัครสมาชิก
+            </button>
+          </p>
+        </form>
+        <a
+          routerLink="/auth/login"
+          style="margin-top: 1vw"
+          fxLayoutAlign="center end"
+          class="register-button"
+        >
+          <h3 style="display: flex; align-items: center">
+            <mat-icon>keyboard_backspace</mat-icon>
+            เข้าสู่ระบบ
+          </h3>
+        </a>
+        <p
+          style="font-size: 0.7rem"
+          fxLayoutAlign="center end"
+          class="copyright"
+        >
+          Copyright © 2021 - 2025, All Right Reserved. Privacy | Terms &
+          Conditions | Help
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #not_lg>
+    <div
+      class="content"
+      fxLayoutAlign="center stretch"
+      fxLayout="column"
+      style="width: 90vw; height: 90vh"
+    >
+      <div fxFlex="100%" style="height: 10vh">
+        <h1
+          style="
+            margin-bottom: 1vw;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2vw;
+          "
+        >
+          Schlaf สมัครสมาชิก
+        </h1>
+        <form
+          fxLayout="column"
+          fxLayoutAlign="center stretch"
+          fxLayoutGap="0px"
+          style="padding: 3% 10% 0% 10%"
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+        >
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ชื่อผู้ใช้งาน</mat-label>
+              <input
+                matInput
+                placeholder="ชื่อผู้ใช้งาน"
+                type="text"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                minlength="8"
+                maxlength="20"
+                #username="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required" class="hint-message">
+                    กรุณากรอกชื่อผู้ใช้งาน
+                  </div>
+                  <div *ngIf="username.errors.minlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่น้อยกว่า 3 ตัวอักษร
+                  </div>
+                  <div *ngIf="username.errors.maxlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่เกิน 20 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>อีเมลล์</mat-label>
+              <input
+                matInput
+                placeholder="อีเมลล์"
+                type="email"
+                name="email"
+                [(ngModel)]="form.email"
+                required
+                email
+                #email="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required" class="hint-message">
+                    กรุณากรอกชื่อผู้ใช้งาน
+                  </div>
+                  <div *ngIf="username.errors.minlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่น้อยกว่า 3 ตัวอักษร
+                  </div>
+                  <div *ngIf="username.errors.maxlength" class="hint-message">
+                    ชื่อผู้ใช้งานต้องมีไม่เกิน 20 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>รหัสผ่าน</mat-label>
+              <input
+                matInput
+                placeholder="รหัสผ่าน"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="8"
+                #password="ngModel"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-hint>
+                <div *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required" class="hint-message">
+                    กรุณากรอกรหัสผ่าน
+                  </div>
+                  <div *ngIf="password.errors.minlength" class="hint-message">
+                    รหัสผ่านต้องมีไม่น้อยกว่า 8 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ยืนยันรหัสผ่าน</mat-label>
+              <input
+                matInput
+                placeholder="ยืนยันรหัสผ่าน"
+                [type]="hideConfirm ? 'password' : 'text'"
+                name="confirmPassword"
+                [(ngModel)]="form.confirmPassword"
+                required
+                #confirmPassword="ngModel"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hideConfirm = !hideConfirm"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>
+                  {{ hideConfirm ? "visibility_off" : "visibility" }}
+                </mat-icon>
+              </button>
+              <mat-hint>
+                <div *ngIf="f.submitted && confirmPassword.invalid">
+                  <div
+                    *ngIf="confirmPassword.errors.required"
+                    class="hint-message"
+                  >
+                    กรุณากรอกรหัสผ่าน
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <div
+            fxLayout="row"
+            fxLayout.md="column"
+            fxLayout.sm="column"
+            fxLayout.xs="column"
+            fxLayoutGap="7px"
+          >
+            <mat-form-field
+              fxFlex="49%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ชื่อ</mat-label>
+              <input
+                matInput
+                placeholder="ชื่อ"
+                required
+                name="name"
+                [(ngModel)]="form.name"
+                #name="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && name.invalid">
+                  <div *ngIf="name.errors.required" class="hint-message">
+                    กรุณากรอกชื่อ
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+            <mat-form-field
+              fxFlex="49%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>นามสกุล</mat-label>
+              <input
+                matInput
+                placeholder="นามสกุล"
+                required
+                name="surname"
+                [(ngModel)]="form.surname"
+                #surname="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && surname.invalid">
+                  <div *ngIf="surname.errors.required" class="hint-message">
+                    กรุณากรอกนามสกุล
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>เบอร์โทรศัพท์</mat-label>
+              <input
+                matInput
+                placeholder="เบอร์โทรศัพท์"
+                required
+                minlength="10"
+                name="tel"
+                [(ngModel)]="form.tel"
+                #tel="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && tel.invalid">
+                  <div *ngIf="tel.errors.required" class="hint-message">
+                    กรุณากรอกเบอร์โทรศัพท์
+                  </div>
+                  <div *ngIf="tel.errors.minlength" class="hint-message">
+                    เบอร์โทรศัพท์ต้องมี 10 ตัวอักษร
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <button
+              mat-raised-button
+              fxFlex="100%"
+              type="submit"
+              style="
+                font-size: 1rem;
+                background-color: #424b54;
+                color: #ebcfb8;
+                margin-top: 1vw;
+              "
+            >
+              สมัครสมาชิก
+            </button>
+          </p>
+        </form>
+        <a
+          routerLink="/auth/login"
+          style="margin-top: 1vw"
+          fxLayoutAlign="center end"
+          class="register-button"
+        >
+          <h3 style="display: flex; align-items: center">
+            <mat-icon>keyboard_backspace</mat-icon>
+            เข้าสู่ระบบ
+          </h3>
+        </a>
+        <p
+          style="font-size: 0.7rem"
+          fxLayoutAlign="center end"
+          class="copyright"
+        >
+          Copyright © 2021 - 2025, All Right Reserved. Privacy | Terms &
+          Conditions | Help
+        </p>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,66 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>{{ data.data.header }}</h1>
+  <h2 mat-dialog-description>
+    วันที่ {{ data.data.createdAt | date: "d MMMM y, เวลา H:mm":"th-TH" }}
+  </h2>
+</div>
+<div mat-dialog-content>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 3%">
+    <img style="width: 100%; height: 500px" [src]="url1" alt="" />
+  </div>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <p>
+      <mat-form-field style="width: 100%">
+        <ngx-mat-file-input
+          type="file"
+          (change)="selectImage($event)"
+          name="photo_1"
+          [(ngModel)]="form.photo_1"
+          required
+          #photo_1="ngModel"
+          placeholder="รูปภาพสลิปชำระเงิน"
+          [accept]="'image/*'"
+        ></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+        <mat-hint>
+          <div *ngIf="f.submitted && photo_1.invalid">
+            <div *ngIf="photo_1.errors.required" class="hint-message">
+              กรุณาเพิ่มรูปภาพสลิปชำระเงิน
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p style="text-align: center">
+      <button
+        style="
+          width: 200px;
+          margin-top: 1%;
+          background-color: #424b54;
+          color: #ebcfb8;
+        "
+        mat-raised-button
+        type="submit"
+      >
+        บันทึกข้อมูล
+      </button>
+    </p>
+  </form>
+</div>

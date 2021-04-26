@@ -1,0 +1,228 @@
+<div class="container">
+  <ng-container *ngIf="change == 'lg'; else not_lg">
+    <div
+      class="content"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      fxLayoutGap="20px"
+    >
+      <div fxFlex="60%">
+        <img
+          style="padding: 5%; width: 45vw"
+          src="../../../../assets/images/apartment.png"
+          alt="computer icon"
+        />
+      </div>
+      <div fxFlex="40%" style="padding: 5%; height: 60vh">
+        <h1
+          fxLayoutAlign="center start"
+          style="margin-bottom: 3vw; font-size: 2.5rem"
+        >
+          Schlaf เข้าสู่ระบบ
+        </h1>
+        <form
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+        >
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ชื่อผู้ใช้งาน</mat-label>
+              <input
+                matInput
+                placeholder="Username"
+                type="text"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                #username="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required" class="hint-message">
+                    กรุณากรอกชื่อผู้ใช้งาน
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>รหัสผ่าน</mat-label>
+              <input
+                matInput
+                placeholder="Password"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                #password="ngModel"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-hint>
+                <div *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required" class="hint-message">
+                    กรุณากรอกรหัสผ่าน
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <button
+              mat-raised-button
+              fxFlex="100%"
+              type="submit"
+              style="font-size: 1rem; background-color: #424b54; color: #ebcfb8"
+            >
+              เข้าสู่ระบบ
+            </button>
+          </p>
+        </form>
+        <a
+          routerLink="/auth/register"
+          style="margin-top: 3vw"
+          fxLayoutAlign="center end"
+          class="register-button"
+        >
+          <h3 style="display: flex; align-items: center">
+            สมัครสมาชิกใหม่<mat-icon>arrow_right_alt</mat-icon>
+          </h3>
+        </a>
+        <p
+          style="font-size: 0.7rem"
+          fxLayoutAlign="center end"
+          class="copyright"
+        >
+          Copyright © 2021 - 2025, All Right Reserved. Privacy | Terms &
+          Conditions | Help
+        </p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #not_lg>
+    <div class="content" fxLayoutAlign="center stretch" fxLayout="column  wrap">
+      <div fxFlex="100%" style="padding: 5%; height: 70vh">
+        <h1 style="margin-bottom: 8vw; font-size: 2.5rem; text-align: center">
+          Schlaf เข้าสู่ระบบ
+        </h1>
+        <form
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          #f="ngForm"
+          novalidate
+        >
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>ชื่อผู้ใช้งาน</mat-label>
+              <input
+                matInput
+                placeholder="Username"
+                type="text"
+                name="username"
+                [(ngModel)]="form.username"
+                required
+                #username="ngModel"
+              />
+              <mat-hint>
+                <div *ngIf="f.submitted && username.invalid">
+                  <div *ngIf="username.errors.required" class="hint-message">
+                    กรุณากรอกชื่อผู้ใช้งาน
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field
+              fxFlex="100%"
+              appearance="outline"
+              [hideRequiredMarker]="true"
+            >
+              <mat-label>รหัสผ่าน</mat-label>
+              <input
+                matInput
+                placeholder="Password"
+                [type]="hide ? 'password' : 'text'"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                #password="ngModel"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-hint>
+                <div *ngIf="f.submitted && password.invalid">
+                  <div *ngIf="password.errors.required" class="hint-message">
+                    กรุณากรอกรหัสผ่าน
+                  </div>
+                </div>
+              </mat-hint>
+            </mat-form-field>
+          </p>
+          <p>
+            <button
+              mat-raised-button
+              fxFlex="100%"
+              type="submit"
+              style="font-size: 1rem; background-color: #424b54; color: #ebcfb8"
+            >
+              เข้าสู่ระบบ
+            </button>
+          </p>
+        </form>
+        <a
+          routerLink="/auth/register"
+          style="margin-top: 4vw"
+          fxLayoutAlign="center end"
+          class="register-button"
+        >
+          <h3 style="display: flex; align-items: center">
+            สมัครสมาชิกใหม่<mat-icon>arrow_right_alt</mat-icon>
+          </h3>
+        </a>
+        <p
+          style="font-size: 0.9rem"
+          class="copyright"
+          fxLayout="column"
+          fxLayoutAlign="end center"
+        >
+          Copyright © 2021 - 2025, All Right Reserved. Privacy | Terms &
+          Conditions | Help
+        </p>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,109 @@
+<div>
+  <ng-container *ngIf="progressBar === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <br />
+  </ng-container>
+  <span style="float: right; cursor: pointer">
+    <mat-icon
+      aria-hidden="false"
+      (click)="closeDialog()"
+      aria-label="Example home icon"
+      >close</mat-icon
+    >
+  </span>
+  <h1 mat-dialog-title>{{ data.header }} {{ data.data.room_number }}</h1>
+</div>
+<div mat-dialog-content>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 3%">
+    <img style="width: 400px; height: 500px" [src]="url1" alt="" />
+    <img style="width: 400px; height: 500px" [src]="url2" alt="" />
+    <img style="width: 400px; height: 500px" [src]="url3" alt="" />
+  </div>
+  <form
+    name="form"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    #f="ngForm"
+    novalidate
+  >
+    <p>
+      <mat-form-field style="width: 100%">
+        <ngx-mat-file-input
+          type="file"
+          (change)="selectImage1($event)"
+          name="photo_1"
+          [(ngModel)]="form.photo_1"
+          required
+          #photo_1="ngModel"
+          placeholder="สัญญาเช่าหน้า 1"
+          [accept]="'image/*'"
+        ></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+        <mat-hint>
+          <div *ngIf="f.submitted && photo_1.invalid">
+            <div *ngIf="photo_1.errors.required" class="hint-message">
+              กรุณาเพิ่มรูปภาพสัญญาเช่า
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field style="width: 100%">
+        <ngx-mat-file-input
+          type="file"
+          (change)="selectImage2($event)"
+          name="photo_2"
+          [(ngModel)]="form.photo_2"
+          required
+          #photo_2="ngModel"
+          placeholder="สัญญาเช่าหน้า 2"
+          [accept]="'image/*'"
+        ></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+        <mat-hint>
+          <div *ngIf="f.submitted && photo_2.invalid">
+            <div *ngIf="photo_2.errors.required" class="hint-message">
+              กรุณาเพิ่มรูปภาพสัญญาเช่า
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field style="width: 100%">
+        <ngx-mat-file-input
+          type="file"
+          (change)="selectImage3($event)"
+          name="photo_3"
+          [(ngModel)]="form.photo_3"
+          required
+          #photo_3="ngModel"
+          placeholder="สัญญาเช่าหน้า 3"
+          [accept]="'image/*'"
+        ></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+        <mat-hint>
+          <div *ngIf="f.submitted && photo_3.invalid">
+            <div *ngIf="photo_3.errors.required" class="hint-message">
+              กรุณาเพิ่มรูปภาพสัญญาเช่า
+            </div>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+    </p>
+    <p style="text-align: center">
+      <button
+        style="
+          width: 200px;
+          margin-top: 1%;
+          background-color: #424b54;
+          color: #ebcfb8;
+        "
+        mat-raised-button
+        type="submit"
+      >
+        {{ data.button }}
+      </button>
+    </p>
+  </form>
+</div>
